@@ -1,0 +1,55 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persist user uploads, PDF reports, and the SQLite database across restarts
+      - uploaded_reports:/app/uploaded_reports
+      - reports_output:/app/reports_output
+      - db_data:/app/backend/db
+      # Mount trained models into container
+      - ./models:/app/models:ro
+    environment:
+      - JWT_SECRET=aarogyaai-super-secret-change-in-production
+    restart: unless-stopped
+    networks:
+      - aarogyaai-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      # VITE_API_BASE is baked into the build at build-time via .env.production
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - aarogyaai-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: aarogyaai-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+    networks:
+      - aarogyaai-net
+
+volumes:
+  uploaded_reports:
+  reports_output:
+  db_data:
+
+networks:
+  aarogyaai-net:
+    driver: bridge

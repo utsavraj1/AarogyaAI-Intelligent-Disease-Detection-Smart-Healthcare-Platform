@@ -1,0 +1,49 @@
+# ─────────────────────────────────────────────────────────────────
+# LiveKit Server Configuration — with Coturn TURN support
+# Docs: https://docs.livekit.io/transport/self-hosting/deployment/
+# ─────────────────────────────────────────────────────────────────
+
+port: 7880
+bind_addresses:
+  - ""   # bind all interfaces
+
+# ── RTC / media ───────────────────────────────────────────────────
+rtc:
+  tcp_port: 7881
+  port_range_start: 50000
+  port_range_end: 50020
+
+  # Set to true when deploying on a cloud VM with a public IP
+  use_external_ip: false
+
+  # ── STUN servers (first connection attempt before TURN) ──────────
+  stun_servers:
+    - stun.l.google.com:19302
+    - stun1.l.google.com:19302
+
+  # ── External TURN server (Coturn) ────────────────────────────────
+  # LiveKit passes these credentials to clients so they can relay
+  # media through Coturn when a direct peer connection fails.
+  # For production: replace localhost with your public IP or domain.
+  turn_servers:
+    - host: localhost
+      port: 3478
+      protocol: udp
+      username: turnuser
+      credential: turnpassword
+
+# ── Redis (required for room state) ──────────────────────────────
+redis:
+  address: redis:6379
+
+# ── API keys (change for production!) ────────────────────────────
+keys:
+  devkey: devsecret
+
+# ── Logging ───────────────────────────────────────────────────────
+logging:
+  json: false
+  level: info
+
+# Development mode — allows insecure ws:// connections
+development: true

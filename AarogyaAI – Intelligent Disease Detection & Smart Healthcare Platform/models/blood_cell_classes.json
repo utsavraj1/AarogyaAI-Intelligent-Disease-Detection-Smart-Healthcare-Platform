@@ -1,0 +1,20 @@
+{
+  "folders": [
+    "Benign",
+    "[Malignant] Pre-B",
+    "[Malignant] Pro-B",
+    "[Malignant] early Pre-B"
+  ],
+  "display": [
+    "Benign",
+    "Pre-B ALL",
+    "Pro-B ALL",
+    "Early Pre-B ALL"
+  ],
+  "index_map": {
+    "0": "Benign",
+    "1": "Pre-B ALL",
+    "2": "Pro-B ALL",
+    "3": "Early Pre-B ALL"
+  }
+}

@@ -1,0 +1,76 @@
+services:
+
+  # ─── Redis ───────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    networks:
+      - livekit-net
+
+  # ─── Coturn TURN server ───────────────────────────────────────────
+  coturn:
+    image: coturn/coturn:latest
+    restart: unless-stopped
+    ports:
+      - "3478:3478/udp"
+      - "3478:3478/tcp"
+      - "5349:5349/udp"
+      - "5349:5349/tcp"
+      - "49152-49162:49152-49162/udp"
+    volumes:
+      - ./turnserver.conf:/etc/coturn/turnserver.conf
+    networks:
+      - livekit-net
+
+  # ─── LiveKit WebRTC SFU ───────────────────────────────────────────
+  livekit:
+    image: livekit/livekit-server:latest
+    command: --config /etc/livekit.yaml
+    restart: unless-stopped
+    ports:
+      - "7880:7880"
+      - "7881:7881"
+      - "50000-50020:50000-50020/udp"
+    volumes:
+      - ./livekit.yaml:/etc/livekit.yaml
+    depends_on:
+      - redis
+      - coturn
+    networks:
+      - livekit-net
+
+  # ─── Backend — JWT token server ───────────────────────────────────
+  backend:
+    build:
+      context: ./Livekit_BE
+      dockerfile: dockerfile
+    restart: unless-stopped
+    environment:
+      - LIVEKIT_API_KEY=devkey
+      - LIVEKIT_API_SECRET=devsecret
+      - LIVEKIT_URL=ws://livekit:7880
+      - PORT=3001
+    depends_on:
+      - livekit
+    networks:
+      - livekit-net
+
+  # ─── Frontend — React + nginx reverse proxy ───────────────────────
+  # nginx serves the React app AND proxies:
+  #   /token  → backend:3001
+  #   /livekit → livekit:7880  (WebSocket upgrade)
+  frontend:
+    build:
+      context: ./Livekit_FE
+      dockerfile: dockerfile
+    restart: unless-stopped
+    ports:
+      - "5174:80"
+    depends_on:
+      - backend
+    networks:
+      - livekit-net
+
+networks:
+  livekit-net:
+    driver: bridge

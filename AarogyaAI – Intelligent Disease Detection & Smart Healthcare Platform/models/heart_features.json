@@ -1,0 +1,19 @@
+{
+  "features": [
+    "age",
+    "sex",
+    "cp",
+    "trestbps",
+    "chol",
+    "fbs",
+    "restecg",
+    "thalach",
+    "exang",
+    "oldpeak",
+    "slope",
+    "ca",
+    "thal"
+  ],
+  "accuracy": 0.8666666666666667,
+  "auc": 0.9207589285714286
+}

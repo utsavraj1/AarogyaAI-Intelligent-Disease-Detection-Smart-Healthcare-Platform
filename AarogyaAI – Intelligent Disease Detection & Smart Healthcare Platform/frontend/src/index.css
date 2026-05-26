@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Refined Light Theme - Easy on eyes, clinical white/mint */
+    --background: 160 20% 98%;
+    --foreground: 160 50% 10%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 160 50% 10%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 50% 10%;
+    
+    --primary: 160 84% 39%;
+    --primary-foreground: 160 20% 98%;
+    
+    --secondary: 160 20% 92%;
+    --secondary-foreground: 160 50% 10%;
+    
+    --muted: 160 20% 94%;
+    --muted-foreground: 160 20% 40%;
+    
+    --accent: 160 50% 95%;
+    --accent-foreground: 160 84% 39%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 160 20% 90%;
+    --input: 160 20% 90%;
+    --ring: 160 84% 39%;
+    
+    --radius: 1.25rem;
+  }
+
+  .dark {
+    /* Refined Dark Theme - "Midnight Emerald" but softer, not pure black */
+    --background: 170 40% 4%;
+    --foreground: 160 20% 98%;
+    
+    --card: 170 40% 6%;
+    --card-foreground: 160 20% 98%;
+    
+    --popover: 170 40% 6%;
+    --popover-foreground: 160 20% 98%;
+    
+    --primary: 160 84% 45%;
+    --primary-foreground: 170 40% 4%;
+    
+    --secondary: 170 40% 12%;
+    --secondary-foreground: 160 20% 98%;
+    
+    --muted: 170 40% 12%;
+    --muted-foreground: 160 20% 60%;
+    
+    --accent: 170 40% 10%;
+    --accent-foreground: 160 84% 45%;
+    
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 160 20% 98%;
+
+    --border: 170 40% 12%;
+    --input: 170 40% 12%;
+    --ring: 160 84% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans transition-colors duration-500;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom Utilities for the "Clinical Premium" look */
+.glass-panel {
+  @apply bg-white/70 dark:bg-card/70 backdrop-blur-xl border border-white/20 dark:border-white/5;
+}
+
+.emerald-gradient-text {
+  @apply bg-gradient-to-br from-emerald-600 to-teal-800 dark:from-emerald-400 dark:to-teal-300 bg-clip-text text-transparent;
+}
+
+.heading-font {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-emerald-500/20 rounded-full;
+}
+
+/* Soft Animations */
+@keyframes soft-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(0.98); }
+}
+
+.animate-soft-pulse {
+  animation: soft-pulse 4s ease-in-out infinite;
+}

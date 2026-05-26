@@ -1,0 +1,16 @@
+{
+  "features": [
+    "Pregnancies",
+    "Glucose",
+    "BloodPressure",
+    "SkinThickness",
+    "Insulin",
+    "BMI",
+    "DiabetesPedigreeFunction",
+    "Age"
+  ],
+  "accuracy": 0.7467532467532467,
+  "auc": 0.8177777777777779,
+  "cv_mean": 0.7552245140480435,
+  "cv_std": 0.022634274089671474
+}

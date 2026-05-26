@@ -2168,9 +2168,9 @@ SOFTWARE.
 
 ### Project Team
 
-- **Lead Developer**: [Your Name](https://github.com/your-username)
-- **Email**: contact@aarogyaai.com
-- **LinkedIn**: [Your LinkedIn](https://linkedin.com/in/your-profile)
+- **Lead Developer**: Utsav Raj(https://github.com/utsavraj1))
+- **Email**: utshavraj.ur321@gmail.com
+- **LinkedIn**: https://www.linkedin.com/in/utsavraj123/
 
 ### Support Channels
 
